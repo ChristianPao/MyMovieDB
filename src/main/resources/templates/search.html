@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -7,16 +8,17 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link th:href="@{/css/results.css}" rel="stylesheet">
     
     <title>My MovieDB</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     
 </head>
 <body>
-    <div>
-        
+    <header th:replace="index :: logo">
+    </header>
+    <div class="mt-2">
         <form th:action="@{/search}" method="get" class="form-search">
-            <h1>My MovieDB</h1>
             <div class="input-group">
                 <input name="query" type="text" class="form-control">
                 <div class="input-group-append">
@@ -25,24 +27,41 @@
             </div>
         </form>
     </div>
+    <div th:replace="index :: logged-as">
+    </div>
     <p th:text="'Results for: ' + ${query}" />
     <div id="articles" th:each="movie: ${moviesFound}" class="m-2">
-        <div class="card container-fluid mt-3">
+        <div class="card container-fluid mt-3 search-result">
             <div class="card-body row">
                 <div class="col-md-3">
-                    <img th:src="${movie.poster}" class="img-responsive" alt="Missing movie's poster" width="100" height="200">
+                    <img th:src="${movie.poster}" class="img-responsive poster" alt="Missing movie's poster" width="100" height="200">
                 </div>
                 <div class="col-md-9">
-                    <h2 class="card-title" th:text="${movie.title}">Movie Title</h2>
-                    <p class="card-text" th:text="${'Year: ' +movie.year}"></p>
+
+                    <div class="row">
+                        <h2 class="card-title" th:text="${movie.title}">Movie Title</h2>
+                    </div>
+                    
+                    <div class="row">
+                        <p class="card-text" th:text="${'Year: ' +movie.year}"></p>
+                    </div> 
+                    <div class="row movie-actions">
+                        <form th:action="@{/rate}" method="get">
+                            <input type="hidden" name="imdb-id" th:value="${movie.imdbID}"/>
+                            <button type="submit" class="btn mr-3">Rate</button>
+                        </form>
+                        <button class="btn" onclick="addToPlan(this)">Plan to watch</button>
+                    </div>
+                   
                 </div>
             </div>
         </div>
     </div>
 
     
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script th:src="@{/js/main.js}"></script>
 </body>
 </html>

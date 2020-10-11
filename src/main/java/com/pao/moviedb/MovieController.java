@@ -15,7 +15,7 @@ public class MovieController {
 	
 	@GetMapping("/search")
 	public String search(Model model, @RequestParam(name="query", required=true) String query) {
-		List<Movie> moviesFound=movieService.searchMovie(query);
+		List<Movie> moviesFound=movieService.searchMovieOnline(query);
 		model.addAttribute("moviesFound", moviesFound);
 		model.addAttribute("query", query);
 		return "search";

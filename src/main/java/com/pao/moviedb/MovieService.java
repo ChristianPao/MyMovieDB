@@ -16,7 +16,7 @@ import kong.unirest.Unirest;
 @Service
 public class MovieService {
 
-	public List<Movie> searchMovie(String query){
+	public List<Movie> searchMovieOnline(String query){
 		/*
 		 * http://www.omdbapi.com/ 
 		 * https://rapidapi.com/hmerritt/api/imdb-internet-movie-database-unofficial?endpoint=apiendpoint_

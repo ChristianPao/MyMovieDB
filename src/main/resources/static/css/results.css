@@ -1,0 +1,12 @@
+.movie-actions {
+    position: absolute;
+    bottom: 0;
+}
+
+.poster {
+    height: 100%;
+}
+
+.search-result {
+    min-height: 15rem;
+}

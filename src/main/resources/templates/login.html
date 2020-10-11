@@ -14,25 +14,25 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
     
 </head>
 <body>
-    <header th:fragment="logo">
-        <img th:src="@{/images/film-stock.jpg}" alt="My ImageDB" width="100%" height="100"> 
+    <header th:replace="index :: logo">
     </header>
-    <div class="mt-2">
-        <form th:action="@{/search}" method="get" class="form-search">
-            <div class="input-group">
-                <input name="query" type="text" class="form-control">
-                <div class="input-group-append">
-                    <button type="submit" class="btn">Search</button>
-                </div>
-            </div>
-        </form>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Login</h3>
+            <form th:action="@{/login}" method="post">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" name="username" placeholder="Enter username" required>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" placeholder="Password" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
     </div>
-    <div th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}" th:fragment="logged-as">
-        <span th:case="false">Not logged in. <a href="/login">Sign in</a> or <a href="/register">sign up</a> to save movies.</span>
-        <span th:case="true">Logged in as <span sec:authentication="name"></span>, <a href="/logout">log out</a>.</span>
-        <span th:case="*">42</span>
-    </div>
-
+    
     
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

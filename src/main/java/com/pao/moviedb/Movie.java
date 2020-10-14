@@ -1,13 +1,28 @@
 package com.pao.moviedb;
 
-public class Movie {
+import java.util.Objects;
+import java.util.Set;
 
-	String title, imdbID, poster, type;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Movie {
+	@Id
+	String imdbID;
+	String title, poster, type;
 	// I chose string because some years are "xxxx-xxxx"
 	String year;
-	Movie(){
-		
+	Movie(){	
 	}
+	
+	@OneToMany(mappedBy="movie")
+	Set<MovieRating> ratings;
+	
 	public String getImdbID() {
 		return imdbID;
 	}
@@ -39,4 +54,18 @@ public class Movie {
 		this.title=title;
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+		if (this==o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+        Movie that= (Movie) o;
+        return Objects.equals(imdbID, that.imdbID);
+	}
+	
+	@Override
+	public String toString() {
+		return "{"+this.title+", year:"+this.year+"}";
+	}
 }

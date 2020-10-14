@@ -1,10 +1,11 @@
 package com.pao.moviedb;
 
 import java.util.Objects;
-import javax.persistence.CascadeType;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 
 
@@ -13,16 +14,10 @@ public class User {
 	@Id
 	private String username;
 	private String password;
-	@ManyToOne(cascade=CascadeType.MERGE)
-	private Role role;
-	
-	
-	public Role getRole() {
-		return role;
-	}
-	public void setRole(Role role) {
-		this.role = role;
-	}
+
+	@OneToMany(mappedBy="user")
+	Set<MovieRating> ratings;
+
 	public String getUsername() {
 		return username;
 	}
@@ -41,7 +36,6 @@ public class User {
 	User(String username, String password){
 		this.username=username;
 		this.password=password;
-		this.role=new Role("USER");
 	}
 	
 	@Override
